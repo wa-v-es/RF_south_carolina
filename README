@@ -1,0 +1,3 @@
+# applies a reverberation filter (Yu et al., 2015) to sediment affected receiver functions. 
+# See Marignier et al. (2024) - doi: https://doi.org/10.1093/gji/ggae070. 
+# and Agrawal et al. (2023) - doi: https://doi.org/10.1029/2023GC011066
