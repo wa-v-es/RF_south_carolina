@@ -53,7 +53,7 @@ station_names = ["E30", "Z57A",
 # station_names = [ "Y58A", "Y59A"]
 # station_names = [
     # "W58A", "X58A", "Y57A", "HAW"]
-st_name='E31'
+# st_name='E31'
 
 fig = plt.figure(figsize=(15, 12)) # for PA
 ax1 = fig.add_axes([0.07, 0.2, 0.83, 0.2]) #[left, bottom, width, height]
@@ -84,7 +84,7 @@ for st_name in station_names:
 sorted_stations = sorted(station_dt_means, key=lambda x: x[1])  # ascending
 sorted_station_names = [s[0] for s in sorted_stations]
 
-i=0
+# i=0
 tick_labels=[]
 for i, st_name in enumerate(sorted_station_names, start=1):
 
@@ -144,3 +144,16 @@ ax4.set_ylabel('time (s)')
 
 # plt.close()
 plt.savefig('RFstacks/sedi_param_stacks_corr.png',dpi=600,bbox_inches='tight', pad_inches=0.1)
+#########
+sys.exit()
+##this bit saves the stacks
+for i, st_name in enumerate(station_names, start=1):
+
+    # rfs_raw=read_rf('RFstacks/stack_corrected/{}_rvr_corr.h5'.format(st_name,st_name),'H5')
+    rfs_rvr_corr=read_rf('RFstacks/{}/{}_rvr_rmvDt.h5'.format(st_name,st_name),'H5')
+    stack_st=rfs_rvr_corr.stack()
+    if len(stack_st) >1:
+        stack_st[0].write('RFstacks/stack_corrected/{}_1_rvr_corr.h5'.format(st_name),'H5')
+        stack_st[1].write('RFstacks/stack_corrected/{}_2_rvr_corr.h5'.format(st_name),'H5')
+    else:
+        stack_st.write('RFstacks/stack_corrected/{}_rvr_corr.h5'.format(st_name),'H5')
