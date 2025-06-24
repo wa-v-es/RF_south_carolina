@@ -1,5 +1,5 @@
 # applies a reverberation filter (Yu et al., 2015) to sediment affected receiver functions. 
 # See Marignier et al. (2024) - doi: https://doi.org/10.1093/gji/ggae070. 
 # and Agrawal et al. (2023) - doi: https://doi.org/10.1016/j.tecto.2023.229938
-# US Costal plain sedi thickness database: https://www.sciencebase.gov/catalog/item/6410870fd34e254fd3530164.
+# US Coastal plain sedi thickness database: https://www.sciencebase.gov/catalog/item/6410870fd34e254fd3530164.
 
