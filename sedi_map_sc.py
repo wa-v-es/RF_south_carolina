@@ -131,6 +131,9 @@ station_names = ["E30", "Z57A",
 "157A", "Z55A",
 "158A", "Z56A"
 ]
+station_names_extra = ["HAW", "Y57A","Y56A","W57A","W58A",
+"X57A","X58A"
+]
 ###
 # df['Longitude'] = df['Longitude'].round(2)
 # df['Latitude'] = df['Latitude'].round(2)
@@ -160,8 +163,11 @@ thickness_lookup = {(row['Longitude'], row['Latitude']): row['Thickness']
 station_thickness = {}
 
 for line in open('stations_SC.txt','r'):
+# for line in open('extra_stats.txt','r'):
+
     line=line.split()
     if line[0] in station_names:
+    # if line[0] in station_names_extra:
         ax1.plot(float(line[3]), float(line[2]), marker='^',markersize=9, linestyle='None', markerfacecolor='none', markeredgecolor='navy', transform=ccrs.PlateCarree(),zorder=99)
         ax1.text(float(line[3]) + 0.05, float(line[2])-.04, line[0], fontsize=10, color='navy', transform=ccrs.PlateCarree(), zorder=99)
         station_lon = round(float(line[3]), 2)
@@ -172,10 +178,13 @@ for line in open('stations_SC.txt','r'):
 
         # Interpolate thickness value
         # thickness = thickness_ds.interp(lon=float(line[3]), lat=float(line[2]), method='nearest').item()
-
-        print(f"Station {line[0]}: Thickness = {thickness:.2f} meters")
-        thick=int(thickness)
-        ax1.text(float(line[3]) - 0.4, float(line[2]), "{}(m)".format(thick), fontsize=9, color='maroon', transform=ccrs.PlateCarree(), zorder=99)
+        try:
+            print(f"Station {line[0]}: Thickness = {thickness:.2f} meters")
+            thick=int(thickness)
+            ax1.text(float(line[3]) - 0.4, float(line[2]), "{}(m)".format(thick), fontsize=9, color='maroon', transform=ccrs.PlateCarree(), zorder=99)
+        except:
+            print(f"Station {line[0]} didn't have sedi")
 
 
 plt.show()
+# plt.savefig('sedi_sc_meters_new.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
