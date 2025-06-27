@@ -86,6 +86,9 @@ sorted_station_names = [s[0] for s in sorted_stations]
 
 # i=0
 tick_labels=[]
+
+lines = []
+
 for i, st_name in enumerate(sorted_station_names, start=1):
 
     rfs_raw=read_rf('RFstacks/{}/radials_{}_updated.h5'.format(st_name,st_name),'H5')
@@ -116,7 +119,12 @@ for i, st_name in enumerate(sorted_station_names, start=1):
     ax2.errorbar(i,np.mean(Dt_st), yerr=0,ecolor='brown',marker='d', alpha=.95,markerfacecolor='khaki', markeredgecolor='dimgray',markersize=9,linestyle='none',zorder=90)
     ax3.errorbar(i,np.mean(r0_st), yerr=0,ecolor='brown',marker='d', alpha=.95,markerfacecolor='khaki', markeredgecolor='dimgray',markersize=9,linestyle='none',zorder=90)
 
+    line = f"{tr.stats.network} {tr.stats.station} {tr.stats.station_longitude:.4f} {tr.stats.station_latitude:.4f} {np.mean(dt_st):.2f} {np.mean(Dt_st):.2f} {np.mean(r0_st):.2f}\n"
+    lines.append(line)
 
+
+with open("rf_sc_dt_DT_r0.txt", "w") as file:
+    file.writelines(lines)
 
 ax1.set_xticks(range(1, len(sorted_station_names) + 1))
 ax1.set_xticklabels(sorted_station_names,rotation=45, ha='center')
@@ -143,7 +151,8 @@ ax4.set_ylabel('time (s)')
 # plt.show()
 
 # plt.close()
-plt.savefig('RFstacks/sedi_param_stacks_corr.png',dpi=600,bbox_inches='tight', pad_inches=0.1)
+# plt.savefig('RFstacks/sedi_param_stacks_corr.png',dpi=600,bbox_inches='tight', pad_inches=0.1)
+
 #########
 sys.exit()
 ##this bit saves the stacks

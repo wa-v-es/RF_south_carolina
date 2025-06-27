@@ -15,7 +15,6 @@ Station 158A: Thickness = 858.10 meters
 Station HAW: Thickness = 250.10 meters
 Station Y57A: Thickness = 162.90 meters
 Station Y56A: Thickness = 124.30 meters
-Station W57A didn't have sedi
 Station W58A: Thickness = 76.70 meters
 Station X57A: Thickness = 147.20 meters
 Station X58A: Thickness = 150.10 meters
