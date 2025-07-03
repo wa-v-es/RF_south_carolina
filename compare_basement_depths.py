@@ -10,6 +10,42 @@ from scipy.optimize import curve_fit
 #
 def compaction_model(z, v0, a, p):
     return v0 + a * z**p
+def plot_param(dt,Dt,basement_depth,Vs,Vp):
+    plt.style.use('seaborn-v0_8-poster')
+
+    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+    # ax1: Basement depth vs dt
+    axs[0, 0].scatter(basement_depth, dt, color='royalblue',s=55,alpha=.8)
+    # axs[0, 0].set_title('Basement Depth vs dt')
+    axs[0, 0].set_xlabel('Basement Depth (km)')
+    axs[0, 0].set_ylabel('$\delta t$ (s)')
+    axs[0, 0].grid(color='dimgrey', linestyle='--',linewidth=.65,alpha=.75)
+
+    # ax2: Basement depth vs Dt
+    axs[0, 1].scatter(basement_depth, Dt, color='purple',s=55,alpha=.8)
+    # axs[0, 1].set_title('Basement Depth vs Dt')
+    axs[0, 1].set_xlabel('Basement Depth (km)')
+    axs[0, 1].set_ylabel('$\Delta t$ (s)')
+    axs[0, 1].grid(color='dimgrey', linestyle='--',linewidth=.65,alpha=.75)
+
+    # ax3: Basement depth vs Vs
+    axs[1, 0].scatter(basement_depth, Vs, color='firebrick',s=55,alpha=.8)
+    # axs[1, 0].set_title('Basement Depth vs Vs (km/s)')
+    axs[1, 0].set_xlabel('Basement Depth (km)')
+    axs[1, 0].set_ylabel('Vs (km/s)')
+    axs[1, 0].grid(color='dimgrey', linestyle='--',linewidth=.65,alpha=.75)
+
+    # ax4: Basement depth vs Vp
+    axs[1, 1].scatter(basement_depth, Vp, color='teal',s=55,alpha=.8)
+    # axs[1, 1].set_title('Basement Depth vs Vp (km/s)')
+    axs[1, 1].set_xlabel('Basement Depth (km)')
+    axs[1, 1].set_ylabel('Vp (km/s)')
+    axs[1, 1].grid(color='dimgrey', linestyle='--',linewidth=.65,alpha=.75)
+
+    plt.tight_layout()
+    plt.savefig('params_compare.png',dpi=800,bbox_inches='tight', pad_inches=0.1)
+
 
 ##
 thickness_dict = {}
@@ -30,7 +66,7 @@ for line in open("rf_sc_dt_DT_r0.txt", "r"):
     floats.append(thick)
     vs=round(2 * floats[5] / floats[3], 3)
     floats.append(vs) ## Vs= 2*D / DT
-    vp= round(thick * vs /(thick - vs*floats[2]),3) ## Vp= D*Vs / d - dt Vs
+    vp= round(thick * vs /(thick - vs*floats[2]),3) ## Vp= D*Vs / D - dt Vs
     floats.append(vp)
     floats.append(round(vp/vs,2))
     output.append([net, sta] + floats)
@@ -39,11 +75,15 @@ for line in open("rf_sc_dt_DT_r0.txt", "r"):
 
 
 ### next bit fits a compaction model to Vs and basement depth..
+dt= np.array([row[4] for row in output])
+Dt= np.array([row[5] for row in output])
 vs= np.array([row[8] for row in output])
 vp= np.array([row[9] for row in output])
 vp_vs= np.array([row[10] for row in output])
 depth= np.array([row[7] for row in output])
 
+##
+plot_param(dt,Dt,depth,vs,vp)
 
 # conclusion from 27th June.
 # Vs makes sense. Vp doesn't. Why? Vp/vs is screwed as a result.
