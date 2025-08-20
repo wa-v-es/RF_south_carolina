@@ -83,7 +83,12 @@ vp_vs= np.array([row[10] for row in output])
 depth= np.array([row[7] for row in output])
 
 ##
-plot_param(dt,Dt,depth,vs,vp)
+print(output)
+with open("rf_sc_dt_DT_r0_vs_vp.txt", "w") as f:
+    for row in output:
+        f.write("\t".join(map(str, row)) + "\n")  
+
+# plot_param(dt,Dt,depth,vs,vp)
 
 # conclusion from 27th June.
 # Vs makes sense. Vp doesn't. Why? Vp/vs is screwed as a result.
