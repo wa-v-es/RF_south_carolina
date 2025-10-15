@@ -147,7 +147,7 @@ def plot_auto(auto_c,station):
     ax1.set_ylabel('Distance')
     ax1.set_xlabel('Time')
     ax1.set_title('AutoC for {}'.format(station),fontsize=11)
-    plt.savefig('RFstacks/figs/autoc/{}_autoC.pdf'.format(station,'R'),bbox_inches='tight', pad_inches=0.2)
+    plt.savefig('RF_stacks_longer/figs/autoc/{}_autoC.pdf'.format(station,'R'),bbox_inches='tight', pad_inches=0.2)
     # fig.show()
     plt.close()
 ####
@@ -160,12 +160,12 @@ def curate_rvr(rfs,dt_max,st):
         if 1.9*dt_rf < tr.stats.t3_offset < 3.1*dt_rf and dt_rf < dt_max:# and tr.stats.max_P < 1:#and tr.stats.distance :# change here for different stations based on Dt in auto_c plots
             stream_rever_rmv_cur.append(tr)
     print('length after removing large DT=', len(stream_rever_rmv_cur))
-    kw = {'trim': (-2.5, 25),'fig_width':6, 'fillcolors': ('steelblue', 'gainsboro'), 'trace_height': 0.1, 'show_vlines': 'True','scale':2.5}
+    kw = {'fig_width':6, 'fillcolors': ('steelblue', 'gainsboro'), 'trace_height': 0.1, 'show_vlines': 'True','scale':2.5}
     stream_rever_rmv_cur.sort(['distance']).plot_rf(**kw)
-    plt.savefig('RFstacks/figs/{}_q_rmvDt.pdf'.format(st),bbox_inches='tight', pad_inches=0.2)
+    plt.savefig('RF_stacks_longer/figs/{}_q_rmvDt.pdf'.format(st),bbox_inches='tight', pad_inches=0.2)
     # plt.show()
     plt.close()
-    stream_rever_rmv_cur.write('RFstacks/{}/{}_rvr_rmvDt'.format(st,st), 'H5')
+    stream_rever_rmv_cur.write('RF_stacks_longer/stack_corrected/{}_rvr_rmvDt'.format(st,st), 'H5')
     # return stream_rever_rmv_cur
 
 #####
@@ -182,16 +182,17 @@ station_names = ["E30", "Z57A",
 # station_names = [
     # "W58A", "X58A", "Y57A", "HAW"]
 # st_name='E31'
+# station_names=['E30']
 for st_name in station_names:
-    rfs_raw=read_rf('RFstacks/{}/radials_{}_updated.h5'.format(st_name,st_name),'H5')
+    rfs_raw=read_rf('RF_stacks_longer/{}/radials_{}_oct25.h5'.format(st_name,st_name),'H5')
 
     rfs_quality= quality_check(rfs_raw)
     print('No. of RF before/after =',len(rfs_raw),' / ',len(rfs_quality))
     ####
 
-    kw = {'trim': (-5, 25),'fig_width':6, 'fillcolors': ('seagreen', 'white'), 'trace_height': 0.1, 'show_vlines': 'True','scale':2.5}
+    kw = {'fig_width':6, 'fillcolors': ('seagreen', 'white'), 'trace_height': 0.1, 'show_vlines': 'True','scale':2.5}
     rfs_quality.select(component='R').sort(['back_azimuth']).plot_rf(**kw)
-    plt.savefig('RFstacks/figs/{}_q.pdf'.format(st_name),bbox_inches='tight', pad_inches=0.2)
+    plt.savefig('RF_stacks_longer/figs/quality/{}_q.pdf'.format(st_name),bbox_inches='tight', pad_inches=0.2)
     plt.close()
     # sys.exit()
 
@@ -206,7 +207,7 @@ for st_name in station_names:
     # kw = {'trim': (-5, 25),'fig_width':6, 'fillcolors': ('mistyrose', 'white'), 'trace_height': 0.1, 'show_vlines': 'True','scale':2.5}
 
     rfs_quality_rvr.select(component='R').sort(['back_azimuth']).plot_rf(**kw)
-    plt.savefig('RFstacks/figs/{}_q_rvr.pdf'.format(st_name),bbox_inches='tight', pad_inches=0.2)
+    plt.savefig('RF_stacks_longer/figs/{}_q_rvr.pdf'.format(st_name),bbox_inches='tight', pad_inches=0.2)
     plt.close()
     # teeba_q_rvr.select(component='R').sort(['back_azimuth']).plot_rf(**kw)
 

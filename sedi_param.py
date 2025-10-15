@@ -91,8 +91,8 @@ lines = []
 
 for i, st_name in enumerate(sorted_station_names, start=1):
 
-    rfs_raw=read_rf('RFstacks/{}/radials_{}_updated.h5'.format(st_name,st_name),'H5')
-    rfs_rvr_corr=read_rf('RFstacks/{}/{}_rvr_rmvDt.h5'.format(st_name,st_name),'H5')
+    rfs_raw=read_rf('RF_stacks_longer/{}/radials_{}_updated.h5'.format(st_name,st_name),'H5')
+    rfs_rvr_corr=read_rf('RF_stacks_longer/{}/{}_rvr_rmvDt.h5'.format(st_name,st_name),'H5')
 
     raw_tr,raw_times=get_stack(rfs_raw)
     stack_corr,times_corr=get_stack(rfs_rvr_corr)
